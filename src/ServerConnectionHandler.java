@@ -120,7 +120,7 @@ public class ServerConnectionHandler extends Thread {
             if(data.contains("CREAR_PARTIDA_")){
                 String[] datos = data.split("_");
                 Jugador j = new Jugador(datos[2],datos[3], datos[4]);
-                Partida p = new Partida();
+                Partida p = new Partida(Integer.parseInt(datos[5]));
                 p.setId((int) (Math.random() * 9999) + 1);
                 System.out.println("Nuevo Jugador: "+j.toString()+" PARTIDA:"+p.id);
                 
