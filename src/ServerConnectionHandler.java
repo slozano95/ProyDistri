@@ -44,31 +44,13 @@ public class ServerConnectionHandler extends Thread {
         try {	                                      // an echo server
             String data = in.readUTF();   // read a line of data from the stream
             System.out.println("RECIBI DEL CLIENTE: " + data);
-            s.registro("RECIBI DEL PROVEEDOR: " + data);
             //retransmitir(data);
             
-            if(data.contains("REGISTRO_")){
+            if(data.contains("PEDIR_TABLERO")){
                 //REGISTRANDO JUGADOR
-                String[] datos = data.split("_");
-                Jugador j = new Jugador(datos[1],datos[2], datos[3]);
-                System.out.println("Nuevo Jugador: "+j.toString());
-                s.registro("Nuevo Jugador con ID:" + j.idJugador);
-                
-                boolean existe = false;
-                for(Jugador ja: s.jugadores){
-                    if(ja.idJugador==Integer.parseInt(datos[1])){
-                        existe = true;
-                    }
-                }
-                if(!existe){
-                    s.jugadores.add(j);
-                    s.obstaculizar();
-                    enviarTablero();
-                }
-                
+                enviarTablero();
             }
             if(data.contains("MOVER_")){
-                
                 String[] datos = data.split("_");
                 int idJ = Integer.parseInt(datos[1]);
                 int poX = Integer.parseInt(datos[2]);
@@ -86,6 +68,51 @@ public class ServerConnectionHandler extends Thread {
                 }
                 enviarTablero();
             }
+            if(data.contains("CREAR_PARTIDA_")){
+                String[] datos = data.split("_");
+                Jugador j = new Jugador(datos[2],datos[3], datos[4]);
+                Partida p = new Partida();
+                p.id = (int) (Math.random() * 9999) + 1;
+                System.out.println("Nuevo Jugador: "+j.toString()+" PARTIDA:"+p.id);
+                
+                boolean existe = false;
+                for(Partida ja: s.partidas){
+                    if(ja.id == p.id){
+                        existe = true;
+                    }
+                }
+                if(!existe){
+                    s.partidas.add(p);
+                }
+                existe = false;
+                for(Jugador ja: s.jugadores){
+                    if(ja.idJugador==Integer.parseInt(datos[2])){
+                        existe = true;
+                    }
+                }
+                if(!existe){
+                    s.jugadores.add(j);
+                    s.obstaculizar();
+                    enviarPartida(j.pEntrada,p.id);
+                }
+            }
+            if(data.contains("UNIR_PARTIDA_")){
+                boolean existe = false;
+                String[] datos = data.split("_");
+                for(Partida ja: s.partidas){
+                    if(ja.id == Integer.parseInt(datos[5])){
+                        Jugador j = new Jugador(datos[2],datos[3], datos[4]);
+                        System.out.println("Nuevo Jugador: "+j.toString()+" PARTIDA:"+datos[5]);
+                        enviarTablero();
+                        existe = true;
+                    }
+                }
+                if(!existe){
+                    enviarDatos(Integer.parseInt(datos[3]), "ERROR_PARTIDA_NO_EXISTE");
+                }
+                
+                
+            }
             out.writeUTF(data);
             clientSocket.close();
         } catch (EOFException e) {
@@ -101,6 +128,9 @@ public class ServerConnectionHandler extends Thread {
     } // end run
     public void guardarLista(ArrayList<Jugador> l){
         this.s.jugadores = l;
+    }
+    public void enviarPartida(int p,int idp){
+        enviarDatos(p, "PARTIDA_"+idp);
     }
     public void enviarTablero(){
         String tablero = "TABLERO_";
@@ -151,5 +181,4 @@ public class ServerConnectionHandler extends Thread {
                 }
         }
     }
-
 } // end class Connection 

@@ -26,6 +26,7 @@ public class GU extends javax.swing.JFrame {
     public int miPoY = 0;
     public int tamX = 20;
     public int tamY = 25;
+    public int idPartida = -1;
     private int pE = 0;
     private int pS = 0;
     private String ip = "";
@@ -174,10 +175,11 @@ public class GU extends javax.swing.JFrame {
         puertoEntrada = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         puertoSalida = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
+        btnUnirse = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         idPartidaTF = new java.awt.TextField();
+        idPartidaRecibido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -385,17 +387,17 @@ public class GU extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setText("Crear Partida");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCrear.setText("Crear Partida");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCrearActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Unirse a Partida");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnUnirse.setText("Unirse a Partida");
+        btnUnirse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnUnirseActionPerformed(evt);
             }
         });
 
@@ -407,6 +409,8 @@ public class GU extends javax.swing.JFrame {
             }
         });
 
+        idPartidaRecibido.setText("Esperando...");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -417,11 +421,16 @@ public class GU extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jButton1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(btnCrear))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(idPartidaRecibido)))
                         .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUnirse, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -446,12 +455,15 @@ public class GU extends javax.swing.JFrame {
                     .addComponent(textArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jButton1)
-                            .addComponent(idPartidaTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idPartidaTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(btnCrear)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnUnirse)
+                            .addComponent(idPartidaRecibido))))
                 .addGap(19, 19, 19))
         );
 
@@ -501,7 +513,7 @@ public class GU extends javax.swing.JFrame {
         pS = Integer.parseInt(puertoSalida.getText());
         idJugador = Integer.parseInt(idJugadorTextField.getText());
         ip = ipTextField.getText();
-        enviarDatos("REGISTRO_"+idJugador+"_"+pE+"_"+pS);
+        //enviarDatos("REGISTRO_"+idJugador+"_"+pE+"_"+pS);
         /*try {
             int BrokerserverPort = pE;   // the server port
             ServerSocket listenSocket = new ServerSocket(BrokerserverPort);
@@ -515,7 +527,7 @@ public class GU extends javax.swing.JFrame {
             System.out.println("Listen socket:" + e.getMessage());
         }*/
     }//GEN-LAST:event_btnConectarActionPerformed
-    private void escuchar(){
+    public void escuchar(){
         try {
             int BrokerserverPort = pE;   // the server port
             ServerSocket listenSocket = new ServerSocket(BrokerserverPort);
@@ -523,9 +535,13 @@ public class GU extends javax.swing.JFrame {
             Socket clientSocket = listenSocket.accept();
             GUConnectionHandler c = new GUConnectionHandler(clientSocket,pE,this);
             listenSocket.close();
-        } catch (IOException e) {
+        }catch (IOException e) {
             System.out.println("Listen socket:" + e.getMessage());
         }
+    }
+    public void setIdPartida(){
+        idPartidaRecibido.setText("ID PARTIDA CREADA: "+idPartida);
+        enviarDatos("PEDIR_TABLERO");
     }
     private void puertoEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puertoEntradaActionPerformed
         // TODO add your handling code here:
@@ -539,13 +555,15 @@ public class GU extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_XCoordActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        enviarDatos("CREAR_PARTIDA_"+idJugador+"_"+pE+"_"+pS);
+    }//GEN-LAST:event_btnCrearActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnUnirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        enviarDatos("UNIR_PARTIDA_"+idJugador+"_"+pE+"_"+pS+"_"+idPartidaTF.getText());
+    }//GEN-LAST:event_btnUnirseActionPerformed
 
     private void idPartidaTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idPartidaTFActionPerformed
         // TODO add your handling code here:
@@ -591,14 +609,15 @@ public class GU extends javax.swing.JFrame {
     private java.awt.TextField XCoord;
     private java.awt.TextField YCoord;
     private java.awt.Button btnConectar;
+    private javax.swing.JButton btnCrear;
     private java.awt.Button btnMover;
     private java.awt.Button btnPasar;
     private java.awt.Button btnQuitar;
+    private javax.swing.JButton btnUnirse;
     private javax.swing.JTextField idJugadorTextField;
+    private javax.swing.JLabel idPartidaRecibido;
     private java.awt.TextField idPartidaTF;
     private javax.swing.JTextField ipTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

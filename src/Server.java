@@ -22,6 +22,7 @@ public class Server extends javax.swing.JFrame {
      */
     String registroCompleto = "";
     public List<Jugador> jugadores = new ArrayList<Jugador>();
+    public List<Partida> partidas = new ArrayList<Partida>();
     public int turno = 0;
     public String[][] matriz = {
             {" ","","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"," "},
@@ -46,6 +47,25 @@ public class Server extends javax.swing.JFrame {
             {"|"," "," "," "," "," "," "," "," ","|"," "," "," "," "," ","|"," "," "," "," "," "," "," "," "," "," ",},
             {" ","","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"," "},
         };
+    public void obstaculizar(){
+        int numero = (int) (Math.random() * 10) + 1;
+        System.out.println("OBS:"+numero);
+        for (int i = 0; i < numero/2; i++) {
+            int coord1 = (int) (Math.random() * 16) + 2;
+            int coord2 = (int) (Math.random() * 16) + 2;
+            matriz[coord1][coord2] = "*";
+            matriz[coord1+1][coord2] = "*";
+            matriz[coord1+2][coord2] = "*";
+        }
+        for (int i = 0; i < numero/2; i++) {
+            int coord1 = (int) (Math.random() * 16) + 2;
+            int coord2 = (int) (Math.random() * 16) + 2;
+            matriz[coord1][coord2] = "*";
+            matriz[coord1][coord2+1] = "*";
+            matriz[coord1][coord2+2] = "*";
+
+        }
+    }
     public Server() {
         initComponents();
     }
@@ -65,8 +85,6 @@ public class Server extends javax.swing.JFrame {
         puertoEntrada = new javax.swing.JTextField();
         puertoSalida = new javax.swing.JTextField();
         btnIniciarServidor = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        registroServidor = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,10 +107,6 @@ public class Server extends javax.swing.JFrame {
             }
         });
 
-        registroServidor.setColumns(20);
-        registroServidor.setRows(5);
-        jScrollPane1.setViewportView(registroServidor);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,7 +114,6 @@ public class Server extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -130,41 +143,13 @@ public class Server extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(puertoSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnIniciarServidor, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void registro(String texto){
-        registroCompleto += "\n"+registroServidor.getText();
-        registroServidor.setText(registroCompleto);
-    }
-    public void checkLog(){
-        if(!registroCompleto.equalsIgnoreCase(registroServidor.getText())){
-            registroServidor.setText(registroCompleto);
-        }
-    }
-    public void obstaculizar(){
-        int numero = (int) (Math.random() * 10) + 1;
-        System.out.println("OBS:"+numero);
-        for (int i = 0; i < numero/2; i++) {
-            int coord1 = (int) (Math.random() * 16) + 2;
-            int coord2 = (int) (Math.random() * 16) + 2;
-            matriz[coord1][coord2] = "*";
-            matriz[coord1+1][coord2] = "*";
-            matriz[coord1+2][coord2] = "*";
-        }
-        for (int i = 0; i < numero/2; i++) {
-            int coord1 = (int) (Math.random() * 16) + 2;
-            int coord2 = (int) (Math.random() * 16) + 2;
-            matriz[coord1][coord2] = "*";
-            matriz[coord1][coord2+1] = "*";
-            matriz[coord1][coord2+2] = "*";
 
-        }
-    }
+    
     private void btnIniciarServidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarServidorActionPerformed
 
         int pE = Integer.parseInt(puertoEntrada.getText());
@@ -172,16 +157,13 @@ public class Server extends javax.swing.JFrame {
         try {
             int BrokerserverPort = pE;   // the server port
             ServerSocket listenSocket = new ServerSocket(BrokerserverPort);
-
             while(true) {
                 System.out.println("ESCUCHANDO...");
-                registro("ESCUCHANDO EN "+pE);
                 Socket clientSocket = listenSocket.accept();
                 ServerConnectionHandler c = new ServerConnectionHandler(clientSocket,pS,this);
             }
         } catch (IOException e) {
             System.out.println("Listen socket:" + e.getMessage());
-            registro("Listen socket:" + e.getMessage());
         }
     }//GEN-LAST:event_btnIniciarServidorActionPerformed
 
@@ -224,10 +206,8 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciarServidor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     private javax.swing.JTextField puertoEntrada;
     private javax.swing.JTextField puertoSalida;
-    private javax.swing.JTextArea registroServidor;
     // End of variables declaration//GEN-END:variables
 }
