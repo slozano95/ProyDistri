@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -55,17 +56,65 @@ public class ServerConnectionHandler extends Thread {
                 int idJ = Integer.parseInt(datos[1]);
                 int poX = Integer.parseInt(datos[2]);
                 int poY = Integer.parseInt(datos[3]);
-                System.out.println("MOVIENDO Jugador: "+idJ+" A ("+poX+","+poY+")");
-                //TODO: VERIFICAR QUE PEUDA MOVERSE AH
-                
-                for(Jugador j: s.jugadores){
-                    if(j.idJugador==idJ){
-                        s.matriz[j.poX][j.poY] = " ";
-                        j.poX = poX;
-                        j.poY = poY;
-                        s.matriz[j.poX][j.poY] = ""+j.idJugador;
+               
+                if(poX < 20 && poY < 25){
+                    
+                        System.out.println("MOVIENDO Jugador: "+idJ+" A ("+poX+","+poY+")");
+                         for(Jugador j: s.jugadores){
+                          if(j.idJugador==idJ){
+                            s.matriz[j.poX][j.poY] = " ";
+                            j.poX = poX;
+                            j.poY = poY;
+                            s.matriz[j.poX][j.poY] = ""+j.idJugador;
+                        }
                     }
+                    enviarTablero();
                 }
+                else{
+                    
+                    enviarDatos(s.jugadores.get(0).pEntrada, "ERROR_CoordenadasFueraDeRango" );
+                }
+                
+                                
+                
+               
+            }
+            if(data.contains("PASAR_")){
+                
+                String[] datos = data.split("_");
+                int idJ = Integer.parseInt(datos[1]);
+                int poX = Integer.parseInt(datos[2]);
+                int poY = Integer.parseInt(datos[3]);
+                String idp = "";
+                String dir = datos[4];
+                String lineaPase = s.matriz.toString().substring(idJ, idJ);
+                boolean bandera = false;
+                if (dir.contains("X")){
+                    
+                    for(int i = poX; i < 20; i++){
+                        if(s.matriz[poX][poY].contains("*")){
+                            bandera = true;
+                            break;
+                        }
+                        
+                        if(Pattern.matches("[0-9]+",s.matriz[poX][poY] )){
+                            idp +=s.matriz[poX][poY];
+                        }
+                    }
+                    if(bandera){
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Balón detenido por el obstaculo");
+                    }
+                    else{
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Pase hecho con exito al jugador "+idp);
+                    }
+                    
+                    
+                }
+                else{
+                    
+                }
+                
+                
                 enviarTablero();
             }
             if(data.contains("CREAR_PARTIDA_")){

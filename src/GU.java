@@ -459,11 +459,17 @@ public class GU extends javax.swing.JFrame {
                             .addComponent(idPartidaTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel8)
+<<<<<<< HEAD
                                 .addComponent(btnCrear)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnUnirse)
                             .addComponent(idPartidaRecibido))))
+=======
+                                .addComponent(jButton1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
+>>>>>>> origin/master
                 .addGap(19, 19, 19))
         );
 
@@ -496,7 +502,10 @@ public class GU extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMoverActionPerformed
 
     private void btnPasarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasarActionPerformed
-        // TODO add your handling code here:
+        // dir tiene que ser un input text
+        String dir = "X";
+        enviarDatos("PASAR_"+idJugador+"_"+miPoX+"_"+miPoY+"_"+dir);
+        
     }//GEN-LAST:event_btnPasarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
