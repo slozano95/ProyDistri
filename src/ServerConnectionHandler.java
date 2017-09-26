@@ -46,15 +46,26 @@ public class ServerConnectionHandler extends Thread {
             System.out.println("RECIBI DEL CLIENTE" + data);
             s.registro("RECIBI DEL PROVEEDOR" + data);
             //retransmitir(data);
-            //out.writeUTF(data);
+            
             if(data.contains("REGISTRO_")){
                 //REGISTRANDO JUGADOR
                 String[] datos = data.split("_");
                 Jugador j = new Jugador(datos[1],datos[2], datos[3]);
                 System.out.println("Nuevo Jugador: "+j.toString());
                 s.registro("Nuevo Jugador con ID:" + j.idJugador);
-                s.jugadores.add(j);
-                enviarTablero();
+                
+                boolean existe = false;
+                for(Jugador ja: s.jugadores){
+                    if(ja.idJugador==Integer.parseInt(datos[1])){
+                        existe = true;
+                    }
+                }
+                if(!existe){
+                    s.jugadores.add(j);
+                    s.obstaculizar();
+                    enviarTablero();
+                }
+                
             }
             if(data.contains("MOVER_")){
                 
@@ -67,13 +78,16 @@ public class ServerConnectionHandler extends Thread {
                 
                 for(Jugador j: s.jugadores){
                     if(j.idJugador==idJ){
+                        s.matriz[j.poX][j.poY] = " ";
                         j.poX = poX;
                         j.poY = poY;
+                        s.matriz[j.poX][j.poY] = ""+j.idJugador;
                     }
                 }
-                actualizarTablero();
                 enviarTablero();
             }
+            out.writeUTF(data);
+            clientSocket.close();
         } catch (EOFException e) {
             System.out.println("EOF:" + e.getMessage());
         } catch (IOException e) {
@@ -81,7 +95,7 @@ public class ServerConnectionHandler extends Thread {
         } finally {
             try {
                 clientSocket.close();
-            } catch (IOException e) {/*close failed*/
+            }catch(IOException e) {/*close failed*/
             }
         }
     } // end run
@@ -100,14 +114,6 @@ public class ServerConnectionHandler extends Thread {
 
         for(int i =0;i<s.jugadores.size();i++){
             enviarDatos(s.jugadores.get(i).pEntrada, tablero);
-        }
-    }
-    public void actualizarTablero(){
-        System.out.println("ServerConnectionHandler.actualizarTablero()");
-        for(int i =0;i<s.jugadores.size();i++){
-            System.out.println("JUGADOR "+i);
-            Jugador j = s.jugadores.get(i);
-            s.matriz[j.poX][j.poY] = ""+j.idJugador;
         }
     }
     public void enviarDatos(int puerto,String datos) {

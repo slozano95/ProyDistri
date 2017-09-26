@@ -59,7 +59,7 @@ public class GU extends javax.swing.JFrame {
     public GU() {
         initComponents();
         //inicializarMatriz();
-        //jPanel1.add(new Mover(this));
+       // jPanel1.add(new Mover(this));
     }
     public void mover(int dir){
         //IZQ
@@ -99,7 +99,7 @@ public class GU extends javax.swing.JFrame {
             }
         }
         dibujarTablero();
-        enviarDatos("X:"+miPoX+",Y:"+miPoY);
+        enviarDatos("MOVER_"+idJugador+"_"+miPoX+"_"+miPoY);
     }
     public void inicializarMatriz(){
         dibujarTablero();
