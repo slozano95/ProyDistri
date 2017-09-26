@@ -105,7 +105,7 @@ public class ServerConnectionHandler extends Thread {
     public void actualizarTablero(){
         System.out.println("ServerConnectionHandler.actualizarTablero()");
         for(int i =0;i<s.jugadores.size();i++){
-            System.out.println("JUGADOR "+i);
+            System.out.println("JUGADOR "+s.jugadores.get(i).idJugador);
             Jugador j = s.jugadores.get(i);
             s.matriz[j.poX][j.poY] = ""+j.idJugador;
         }
