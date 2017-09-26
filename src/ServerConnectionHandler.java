@@ -73,8 +73,10 @@ public class ServerConnectionHandler extends Thread {
                 int idJ = Integer.parseInt(datos[1]);
                 int poX = Integer.parseInt(datos[2]);
                 int poY = Integer.parseInt(datos[3]);
+               
                 System.out.println("MOVIENDO Jugador: "+idJ+" A ("+poX+","+poY+")");
-                //TODO: VERIFICAR QUE PEUDA MOVERSE AH
+                
+                
                 
                 for(Jugador j: s.jugadores){
                     if(j.idJugador==idJ){
@@ -84,6 +86,15 @@ public class ServerConnectionHandler extends Thread {
                         s.matriz[j.poX][j.poY] = ""+j.idJugador;
                     }
                 }
+                enviarTablero();
+            }
+            if(data.contains("PASAR_")){
+                
+                String[] datos = data.split("_");
+                int idJ = Integer.parseInt(datos[1]);
+                int poX = Integer.parseInt(datos[2]);
+                int poY = Integer.parseInt(datos[3]);
+                
                 enviarTablero();
             }
             out.writeUTF(data);
