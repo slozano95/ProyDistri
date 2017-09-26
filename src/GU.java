@@ -77,7 +77,7 @@ public class GU extends javax.swing.JFrame {
         }
         //DER
         if(dir==2){
-            eje="DER"
+            eje="DER";
             if(miPoY+1<=tamY){
                 matriz[miPoX][miPoY] = anterior;
                 anterior = matriz[miPoX][miPoY+1];
