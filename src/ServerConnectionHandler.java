@@ -116,7 +116,6 @@ public class ServerConnectionHandler extends Thread {
             enviarDatos(s.jugadores.get(i).pEntrada, tablero);
         }
     }
-
     public void actualizarTablero(){
         System.out.println("ServerConnectionHandler.actualizarTablero()");
         for(int i =0;i<s.jugadores.size();i++){
