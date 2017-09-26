@@ -53,6 +53,9 @@ public class Partida {
         this.id = id;
         equipos = new ArrayList<Equipo>();
     }
+    public void addEquipo(Equipo equipo){
+        equipos.add(equipo);
+    }
     
 
 }
