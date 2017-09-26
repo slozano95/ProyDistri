@@ -60,11 +60,24 @@ public class GUConnectionHandler extends Thread {
             }
             if(data.contains("ERROR_")){
                 
+                String[] datos = data.split("_");
+                JOptionPane optionPane = new JOptionPane(datos[1],JOptionPane.WARNING_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Error!");
+                dialog.setAlwaysOnTop(true); // to show top of all other application
+                dialog.setVisible(true); // to visible the dialog
+                
             }
             if(data.contains("MENSAJE_")){
                 
+                String[] datos = data.split("_");
+                JOptionPane optionPane = new JOptionPane(datos[1],JOptionPane.INFORMATION_MESSAGE);
+                JDialog dialog = optionPane.createDialog("MSJ!");
+                dialog.setAlwaysOnTop(true); // to show top of all other application
+                dialog.setVisible(true); // to visible the dialog
+                
             }
             if(data.equalsIgnoreCase("TURNO")){
+                
                 
             }
             else if(data.contains("PARTIDA_")){
