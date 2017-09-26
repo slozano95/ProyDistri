@@ -465,11 +465,7 @@ public class GU extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnUnirse)
                             .addComponent(idPartidaRecibido)))) //*/
-//=======
-  /*                              .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
-//>>>>>>> origin/master*/
+
                 .addGap(19, 19, 19))
         );
 
