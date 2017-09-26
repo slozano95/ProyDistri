@@ -89,10 +89,10 @@ public class ServerConnectionHandler extends Thread {
                 String dir = datos[4];
                 String lineaPase = s.matriz.toString().substring(idJ, idJ);
                 boolean bandera = false;
-                if (dir.contains("X")){
+                if (dir.contains("AB")){
                     
                     for(int i = poX; i < 20; i++){
-                        if(s.matriz[poX][poY].contains("*")){
+                        if(s.matriz[i][poY].contains("*")){
                             bandera = true;
                             break;
                         }
@@ -106,14 +106,99 @@ public class ServerConnectionHandler extends Thread {
                     }
                     else{
                         enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Pase hecho con exito al jugador "+idp);
+                        enviarDatos(s.jugadores.get(Integer.parseInt(idp)).pEntrada, "MENSAJE_Es tu turno ");
                     }
                     
                     
                 }
-                else{
+                if (dir.contains("DER")){
+                    
+                    for(int i = poY; i < 25; i++){
+                        if(s.matriz[poX][i].contains("*")){
+                            bandera = true;
+                            break;
+                        }
+                        
+                        if(Pattern.matches("[0-9]+",s.matriz[poX][poY] )){
+                            idp +=s.matriz[poX][poY];
+                        }
+                    }
+                    if(bandera){
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Balón detenido por el obstaculo");
+                    }
+                    else{
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Pase hecho con exito al jugador "+idp);
+                        enviarDatos(s.jugadores.get(Integer.parseInt(idp)).pEntrada, "MENSAJE_Es tu turno ");
+                    }
+                    
+                    
+                }           
+                if (dir.contains("DIAG")){
+                    
+                    for(int i = poX; i < 20; i++){
+                        if(s.matriz[i][i].contains("*")){
+                            bandera = true;
+                            break;
+                        }
+                        
+                        if(Pattern.matches("[0-9]+",s.matriz[poX][poY] )){
+                            idp +=s.matriz[poX][poY];
+                        }
+                    }
+                    if(bandera){
+                        enviarDatos(s.jugadores.get(idJ).pEntrada, "MENSAJE_Balón detenido por el obstaculo");
+                    }
+                    else{
+                        enviarDatos(s.jugadores.get(idJ).pEntrada, "MENSAJE_Pase hecho con exito al jugador "+idp);
+                        enviarDatos(s.jugadores.get(Integer.parseInt(idp)).pEntrada, "MENSAJE_Es tu turno ");
+                    }
+                    
                     
                 }
-                
+                if (dir.contains("IZQ")){
+                    
+                    for(int i = poY; i > 0; i--){
+                        if(s.matriz[poX][i].contains("*")){
+                            bandera = true;
+                            break;
+                        }
+                        
+                        if(Pattern.matches("[0-9]+",s.matriz[poX][poY] )){
+                            idp +=s.matriz[poX][poY];
+                        }
+                    }
+                    if(bandera){
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Balón detenido por el obstaculo");
+                    }
+                    else{
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Pase hecho con exito al jugador "+idp);
+                        enviarDatos(s.jugadores.get(Integer.parseInt(idp)).pEntrada, "MENSAJE_Es tu turno ");
+                    }
+                    
+                    
+                }
+                if (dir.contains("ARR")){
+                    
+                    for(int i = poX; i > 0; i--){
+                        if(s.matriz[i][poY].contains("*")){
+                            bandera = true;
+                            break;
+                        }
+                        
+                        if(Pattern.matches("[0-9]+",s.matriz[poX][poY] )){
+                            idp +=s.matriz[poX][poY];
+                        }
+                    }
+                    if(bandera){
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Balón detenido por el obstaculo");
+                    }
+                    else{
+                        enviarDatos(s.jugadores.get(0).pEntrada, "MENSAJE_Pase hecho con exito al jugador "+idp);
+                        enviarDatos(s.jugadores.get(Integer.parseInt(idp)).pEntrada, "MENSAJE_Es tu turno ");
+                    }
+                    
+                    
+                }
                 
                 enviarTablero();
             }

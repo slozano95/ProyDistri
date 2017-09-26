@@ -29,6 +29,7 @@ public class GU extends javax.swing.JFrame {
     public int idPartida = -1;
     private int pE = 0;
     private int pS = 0;
+    private String eje="";
     private String ip = "";
     public String anterior = ".";
     private int idJugador;
@@ -60,11 +61,13 @@ public class GU extends javax.swing.JFrame {
     public GU() {
         initComponents();
         //inicializarMatriz();
-       // jPanel1.add(new Mover(this));
+        jPanel1.add(new Mover(this));
     }
     public void mover(int dir){
         //IZQ
+        
         if(dir==1){
+            eje = "IZQ";
             if(miPoY-1>=0){
                 matriz[miPoX][miPoY] = anterior;
                 anterior = matriz[miPoX][miPoY-1];
@@ -74,6 +77,7 @@ public class GU extends javax.swing.JFrame {
         }
         //DER
         if(dir==2){
+            eje="DER"
             if(miPoY+1<=tamY){
                 matriz[miPoX][miPoY] = anterior;
                 anterior = matriz[miPoX][miPoY+1];
@@ -83,6 +87,7 @@ public class GU extends javax.swing.JFrame {
         }
         //ARR
         if(dir==3){
+            eje="ARR";
             if(miPoX-1>=0){
                 matriz[miPoX][miPoY] = anterior;
                 anterior = matriz[miPoX-1][miPoY];
@@ -92,6 +97,7 @@ public class GU extends javax.swing.JFrame {
         }
         //ABJ
         if(dir==4){
+            eje="AB";
             if(miPoX+1<=tamX){
                 matriz[miPoX][miPoY] = anterior;
                 anterior = matriz[miPoX+1][miPoY];
