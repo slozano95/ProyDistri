@@ -43,8 +43,8 @@ public class ServerConnectionHandler extends Thread {
     public void run() {
         try {	                                      // an echo server
             String data = in.readUTF();   // read a line of data from the stream
-            System.out.println("RECIBI DEL CLIENTE" + data);
-            s.registro("RECIBI DEL PROVEEDOR" + data);
+            System.out.println("RECIBI DEL CLIENTE: " + data);
+            s.registro("RECIBI DEL PROVEEDOR: " + data);
             //retransmitir(data);
             
             if(data.contains("REGISTRO_")){
@@ -116,6 +116,17 @@ public class ServerConnectionHandler extends Thread {
             enviarDatos(s.jugadores.get(i).pEntrada, tablero);
         }
     }
+<<<<<<< HEAD
+=======
+    public void actualizarTablero(){
+        System.out.println("ServerConnectionHandler.actualizarTablero()");
+        for(int i =0;i<s.jugadores.size();i++){
+            System.out.println("JUGADOR "+s.jugadores.get(i).idJugador);
+            Jugador j = s.jugadores.get(i);
+            s.matriz[j.poX][j.poY] = ""+j.idJugador;
+        }
+    }
+>>>>>>> origin/master
     public void enviarDatos(int puerto,String datos) {
         System.out.println("ServerConnectionHandler.enviarDatos()");
         Socket s = null;

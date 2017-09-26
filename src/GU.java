@@ -30,7 +30,7 @@ public class GU extends javax.swing.JFrame {
     private int pS = 0;
     private String ip = "";
     public String anterior = ".";
-    private int idJugador = 2;
+    private int idJugador;
     String tablero = "";
     public String[][] matriz = {
             {".","","-","-","-","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","."},
