@@ -15,10 +15,17 @@ import java.util.List;
  */
 public class Partida {
 
+<<<<<<< Updated upstream
     Partida() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+=======
+    private List<Equipo> equipos;
+
+    private Date duracion;
+    public int id;
+>>>>>>> Stashed changes
     public List<Equipo> getEquipos() {
         return equipos;
     }
@@ -47,6 +54,7 @@ public class Partida {
         this.id = id;
         equipos = new ArrayList<Equipo>();
     }
+<<<<<<< Updated upstream
     
     private List<Equipo> equipos;
 
@@ -95,4 +103,7 @@ public class Partida {
         }
     }
 
+=======
+
+>>>>>>> Stashed changes
 }
