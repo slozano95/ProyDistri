@@ -74,19 +74,27 @@ public class ServerConnectionHandler extends Thread {
                 int poX = Integer.parseInt(datos[2]);
                 int poY = Integer.parseInt(datos[3]);
                
-                System.out.println("MOVIENDO Jugador: "+idJ+" A ("+poX+","+poY+")");
-                
-                
-                
-                for(Jugador j: s.jugadores){
-                    if(j.idJugador==idJ){
-                        s.matriz[j.poX][j.poY] = " ";
-                        j.poX = poX;
-                        j.poY = poY;
-                        s.matriz[j.poX][j.poY] = ""+j.idJugador;
+                if(poX < 20 && poY < 25){
+                    
+                        System.out.println("MOVIENDO Jugador: "+idJ+" A ("+poX+","+poY+")");
+                         for(Jugador j: s.jugadores){
+                          if(j.idJugador==idJ){
+                            s.matriz[j.poX][j.poY] = " ";
+                            j.poX = poX;
+                            j.poY = poY;
+                            s.matriz[j.poX][j.poY] = ""+j.idJugador;
+                        }
                     }
+                    enviarTablero();
                 }
-                enviarTablero();
+                else{
+                    
+                    enviarDatos(s.jugadores.get(0).pEntrada, "ERROR_CoordenadasFueraDeRango" );
+                }
+                
+                                
+                
+               
             }
             if(data.contains("PASAR_")){
                 
@@ -94,6 +102,15 @@ public class ServerConnectionHandler extends Thread {
                 int idJ = Integer.parseInt(datos[1]);
                 int poX = Integer.parseInt(datos[2]);
                 int poY = Integer.parseInt(datos[3]);
+                String dir = datos[4];
+                
+                if (dir.contains("X")){
+                    //String lineaPase = s.matriz.toString().substring(idJ, idJ);
+                }
+                else{
+                    
+                }
+                
                 
                 enviarTablero();
             }
