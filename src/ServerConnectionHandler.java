@@ -277,6 +277,8 @@ public class ServerConnectionHandler extends Thread {
         System.out.println("TABLERO\n"+tablero);
 
         for(int i =0;i<s.jugadores.size();i++){
+            System.out.println("I:_____"+i);
+            System.out.println(s.jugadores.get(i).pEntrada);
             enviarDatos(s.jugadores.get(i).pEntrada, tablero);
         }
     }
