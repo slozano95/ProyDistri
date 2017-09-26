@@ -43,8 +43,8 @@ public class ServerConnectionHandler extends Thread {
     public void run() {
         try {	                                      // an echo server
             String data = in.readUTF();   // read a line of data from the stream
-            System.out.println("RECIBI DEL CLIENTE" + data);
-            s.registro("RECIBI DEL PROVEEDOR" + data);
+            System.out.println("RECIBI DEL CLIENTE: " + data);
+            s.registro("RECIBI DEL PROVEEDOR: " + data);
             //retransmitir(data);
             //out.writeUTF(data);
             if(data.contains("REGISTRO_")){
