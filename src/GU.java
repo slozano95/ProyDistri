@@ -191,7 +191,7 @@ public class GU extends javax.swing.JFrame {
 
         textArea1.setName("Tablero"); // NOI18N
 
-        btnQuitar.setLabel("Quitar");
+        btnQuitar.setLabel("Patear");
         btnQuitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnQuitarActionPerformed(evt);
@@ -505,13 +505,15 @@ public class GU extends javax.swing.JFrame {
 
     private void btnPasarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasarActionPerformed
         // dir tiene que ser un input text
-        String dir = "X";
-        enviarDatos("PASAR_"+idJugador+"_"+miPoX+"_"+miPoY+"_"+dir);
+        //String dir = "X";
+        enviarDatos("PASAR_"+idJugador+"_"+miPoX+"_"+miPoY+"_"+eje);
         
     }//GEN-LAST:event_btnPasarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         // TODO add your handling code here:
+        enviarDatos("PATEAR_"+idJugador+"_"+miPoX+"_"+miPoY+"_"+eje);
+        
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void idJugadorTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idJugadorTextFieldActionPerformed
