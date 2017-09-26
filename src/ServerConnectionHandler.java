@@ -121,7 +121,7 @@ public class ServerConnectionHandler extends Thread {
                 String[] datos = data.split("_");
                 Jugador j = new Jugador(datos[2],datos[3], datos[4]);
                 Partida p = new Partida();
-                p.id = (int) (Math.random() * 9999) + 1;
+                p.setId((int) (Math.random() * 9999) + 1);
                 System.out.println("Nuevo Jugador: "+j.toString()+" PARTIDA:"+p.id);
                 
                 boolean existe = false;
