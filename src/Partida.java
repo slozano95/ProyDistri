@@ -16,7 +16,9 @@ import java.util.List;
 public class Partida {
 
     Partida() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
+        equipos = new ArrayList<Equipo>();
+// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private List<Equipo> equipos;
