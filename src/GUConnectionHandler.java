@@ -47,6 +47,12 @@ public class GUConnectionHandler extends Thread {
                 gui.dibujarTablero();
                 System.out.println("RECIBI TABLERO"+datos[1]);
             }
+            if(data.contains("ERROR_")){
+                
+            }
+            if(data.contains("MENSAJE_")){
+                
+            }
             if(data.equalsIgnoreCase("TURNO")){
                 clientSocket.close();
             }
