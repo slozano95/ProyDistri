@@ -48,6 +48,5 @@ public class Equipo {
     private List<Jugador> jugadores;
     private int puntos;
     
-    
-    
+
 }

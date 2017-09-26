@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,9 +14,38 @@ import java.util.List;
  * @author Ale
  */
 public class Partida {
+
+    public List<Equipo> getEquipos() {
+        return equipos;
+    }
+
+    public void setEquipos(List<Equipo> equipos) {
+        this.equipos = equipos;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Partida(int id) {
+        this.id = id;
+        equipos = new ArrayList<Equipo>();
+    }
     
     private List<Equipo> equipos;
-    private Date duracion;
+    private int duracion;
     private int id;
     
 }
